@@ -90,7 +90,8 @@ def resource_uri(path, resource, **kwargs):
     return routing.Rule(path, endpoint=resource)
 
 
-def dispatcher(mappings):
+def dispatcher(resources):
+    mappings = routing.Map(resources)
     def dispatch(req):
         urls = mappings.bind_to_environ(req.environ)
         return urls.dispatch(lambda e, v: e(req, **v), catch_http_exceptions=True)
